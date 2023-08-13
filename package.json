@@ -2,6 +2,9 @@
   "name": "caraxes",
   "version": "0.1.0",
   "private": true,
+  "engines": {
+    "node": "18.17.1"
+  },
   "scripts": {
     "dev": "next dev",
     "build": "next build",
@@ -9,14 +12,21 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@reduxjs/toolkit": "^1.9.5",
+    "@types/lodash": "^4.14.197",
     "@types/node": "20.4.9",
     "@types/react": "18.2.20",
     "@types/react-dom": "18.2.7",
+    "@types/styled-components": "^5.1.26",
+    "axios": "^1.4.0",
     "eslint": "8.46.0",
     "eslint-config-next": "13.4.13",
+    "lodash": "^4.17.21",
     "next": "13.4.13",
     "react": "18.2.0",
     "react-dom": "18.2.0",
+    "react-redux": "^8.1.2",
+    "styled-components": "^6.0.7",
     "typescript": "5.1.6"
   }
 }

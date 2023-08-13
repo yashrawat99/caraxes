@@ -1,4 +1,7 @@
 /** @type {import('next').NextConfig} */
-const nextConfig = {}
+const nextConfig = {
+  basePath: "/app/caraxes",
+  compress: true,
+};
 
-module.exports = nextConfig
+module.exports = nextConfig;
