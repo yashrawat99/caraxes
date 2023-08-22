@@ -2,6 +2,7 @@ export interface TripsListingDTO {
   trips: Trip[];
   pageNo: number;
   pageSize: number;
+  totalPageCount: number;
 }
 
 interface Trip {

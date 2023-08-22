@@ -1,19 +1,23 @@
 import React, { useMemo } from "react";
-
+import { useSelector, useDispatch, TypedUseSelectorHook } from "react-redux";
 import { TripTemplateDTO } from "./trips.spec";
 import Card from "./Card";
+import { AppDispatch, RootState } from "@/app/store/configureStore";
 import SkeletonCard from "./SkeletonCard";
 import Filters from "./Filter";
 
+export const useAppDispatch: () => AppDispatch = useDispatch;
+export const useAppSelector: TypedUseSelectorHook<RootState> = useSelector;
+
 const TripTemplateV2 = ({
   trips,
-  handleScroll,
   handleVehicleReplace,
   redirectToDetail,
   isFetching,
   handleFilterSelect,
+  handleScroll,
 }: TripTemplateDTO) => {
-  const SkeletonGroup = () => {
+  const SkeletonGroup = useMemo(() => {
     return (
       <>
         <SkeletonCard />
@@ -22,34 +26,36 @@ const TripTemplateV2 = ({
         <SkeletonCard />
       </>
     );
-  };
+  }, []);
+
   const MemoizedTripCardsTemplate = useMemo(() => {
-    return trips.length ? (
-      trips.map((trip) => (
-        <React.Fragment key={trip.tripId}>
-          <Card
-            key={trip.tripId}
-            heading={trip.heading}
-            subHeading={trip.subHeading}
-            tripId={trip.tripId}
-            buttonDesc={trip?.buttonDesc}
-            paymentWidget={trip?.paymentWidget}
-            stickyWidget={trip.stickyWidget}
-            trackingInfoWidget={trip?.trackingInfoWidget}
-            podWidget={trip.podWidget}
-            otpWidget={trip.otpWidget}
-            feedbackWidget={trip.feedbackWidget}
-            tripState={trip.tripState}
-            handleVehicleReplace={handleVehicleReplace}
-            redirectToDetail={redirectToDetail}
-            ticketWidget={trip.ticketWidget}
-          />
-          {isFetching && <SkeletonGroup />}
-        </React.Fragment>
-      ))
-    ) : isFetching ? (
-      <SkeletonGroup />
-    ) : null;
+    return trips?.length
+      ? trips.map((trip) => (
+          <React.Fragment key={trip.tripId}>
+            <Card
+              key={trip.tripId}
+              heading={trip.heading}
+              subHeading={trip.subHeading}
+              tripId={trip.tripId}
+              buttonDesc={trip?.buttonDesc}
+              paymentWidget={trip?.paymentWidget}
+              stickyWidget={trip.stickyWidget}
+              trackingInfoWidget={trip?.trackingInfoWidget}
+              podWidget={trip.podWidget}
+              otpWidget={trip.otpWidget}
+              feedbackWidget={trip.feedbackWidget}
+              tripState={trip.tripState}
+              handleVehicleReplace={handleVehicleReplace}
+              redirectToDetail={redirectToDetail}
+              ticketWidget={trip.ticketWidget}
+              trip={trip}
+            />
+            {isFetching && SkeletonGroup}
+          </React.Fragment>
+        ))
+      : isFetching
+      ? SkeletonGroup
+      : "No Trips Found :(";
   }, [handleVehicleReplace, isFetching, redirectToDetail, trips]);
 
   const MemoizedTripTemplate = useMemo(() => {
@@ -70,6 +76,7 @@ const TripTemplateV2 = ({
       </div>
     );
   }, [MemoizedTripCardsTemplate, handleScroll, handleFilterSelect]);
+
   return MemoizedTripTemplate;
 };
 

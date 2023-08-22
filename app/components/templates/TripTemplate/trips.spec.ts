@@ -2,6 +2,7 @@ export interface TripsListingDTO {
   trips: Trip[];
   pageNo: number;
   pageSize: number;
+  totalPageCount: number;
 }
 
 interface Trip {
@@ -22,30 +23,30 @@ interface Trip {
 interface TicketWidget {
   count: number;
   desc: string;
-  color: 'RED' | 'GREEN' | 'ORANGE';
-  bgColor: 'RED' | 'GREEN' | 'ORANGE';
+  color: "RED" | "GREEN" | "ORANGE";
+  bgColor: "RED" | "GREEN" | "ORANGE";
 }
 interface PodWidget {
-  type: 'UPLOAD' | 'VALIDITY';
+  type: "UPLOAD" | "VALIDITY";
   title: string;
   desc: Desc | null;
   tag: Desc | null;
   button: Desc | null;
 }
 export enum PodWidgetType {
-  UPLOAD = 'UPLOAD',
-  VALIDITY = 'VALIDITY',
+  UPLOAD = "UPLOAD",
+  VALIDITY = "VALIDITY",
 }
 
 interface Desc {
-  icon: 'WARNING' | 'CAMERA';
+  icon: "WARNING" | "CAMERA";
   text: string;
   color: string;
 }
 
 export enum IconType {
-  WARNING = 'WARNING',
-  CAMERA = 'CAMERA',
+  WARNING = "WARNING",
+  CAMERA = "CAMERA",
 }
 
 interface OtpWidget {
@@ -65,13 +66,13 @@ interface Transaction {
 
 interface FeedbackWidget {
   desc: string;
-  feedbackType: 'GOOD' | 'BAD' | 'NORMAL';
+  feedbackType: "GOOD" | "BAD" | "NORMAL";
   score: string;
 }
 export enum FeedBackTypes {
-  GOOD = 'GOOD',
-  BAD = 'BAD',
-  NORMAL = 'NORMAL',
+  GOOD = "GOOD",
+  BAD = "BAD",
+  NORMAL = "NORMAL",
 }
 interface TrackingInfoWidget {
   trackingInfo: TrackingInfo[];
@@ -79,24 +80,24 @@ interface TrackingInfoWidget {
 }
 
 interface ButtonDesc {
-  type: 'TRIP_DETAIL' | 'VEHICLE_REPLACEMENT';
+  type: "TRIP_DETAIL" | "VEHICLE_REPLACEMENT";
   desc: string;
 }
 
 export enum TrackingButtonDesc {
-  TRIP_DETAIL = 'TRIP_DETAIL',
-  VEHICLE_REPLACEMENT = 'VEHICLE_REPLACEMENT',
-  CANCELLED_TICKET_OPEN = 'CANCELLED_TICKET_OPEN',
+  TRIP_DETAIL = "TRIP_DETAIL",
+  VEHICLE_REPLACEMENT = "VEHICLE_REPLACEMENT",
+  CANCELLED_TICKET_OPEN = "CANCELLED_TICKET_OPEN",
 }
 
 interface TrackingInfo {
-  icon: 'ADDRESS' | 'TIME';
+  icon: "ADDRESS" | "TIME";
   heading: string;
   desc: string;
 }
 export enum TrackingIcon {
-  ADDRESS = 'ADDRESS',
-  TIME = 'TIME',
+  ADDRESS = "ADDRESS",
+  TIME = "TIME",
 }
 interface StickyWidget {
   desc: string;
@@ -117,6 +118,7 @@ export interface CardType {
   handleVehicleReplace: Function;
   redirectToDetail: Function;
   ticketWidget: TicketWidget | null;
+  trip: Trip;
 }
 export interface Colors {
   BG_COLOR: {
@@ -128,7 +130,7 @@ export interface Colors {
 }
 
 export interface TripTemplateDTO {
-  trips: Trip[];
+  trips: undefined | Trip[];
   handleScroll: Function;
   handleVehicleReplace: Function;
   redirectToDetail: Function;
@@ -141,6 +143,9 @@ export interface FilterType {
   filters: Filter[];
 }
 
+export interface FilterDTO {
+  stateFilters: Filter[];
+}
 export interface Filter {
   key: string;
   value: string;

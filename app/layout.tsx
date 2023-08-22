@@ -1,7 +1,14 @@
 import "./globals.css";
 import { Baloo_2 } from "next/font/google";
+import StyledComponentsRegistry from "./registry";
+import Providers from "./components/templates/TripTemplate/Provider";
 
-const baloo = Baloo_2({ subsets: ["latin"] });
+const baloo = Baloo_2({
+  weight: ["400", "500", "600", "800", "700"],
+  style: ["normal"],
+  display: "swap",
+  subsets: ["latin"],
+});
 
 export default async function RootLayout({
   children,
@@ -9,8 +16,12 @@ export default async function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en">
-      <body className={baloo.className}>{children}</body>
+    <html>
+      <body className={baloo.className}>
+        <Providers>
+          <StyledComponentsRegistry>{children}</StyledComponentsRegistry>
+        </Providers>
+      </body>
     </html>
   );
 }

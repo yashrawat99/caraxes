@@ -6,7 +6,6 @@ const getAppConfig = async () => {
 };
 const getActiveLoads = async () => {
   const data = await axiosInstance.get("/rest/tesseract/v1/load?state-id=1");
-  console.log(axiosInstance);
 };
 const LoadsTemplate = async () => {
   getAppConfig();

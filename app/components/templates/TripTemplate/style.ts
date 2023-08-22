@@ -1,9 +1,7 @@
-"use client";
 import styled from "styled-components";
 import { FeedbackAesthetics } from "./util";
 
 export const Container = styled.div`
-  font-family: "Baloo 2";
   margin-left: 16px;
   margin-right: 16px;
   background: #ffffff;
@@ -298,7 +296,6 @@ export const Container = styled.div`
     padding: 12px 16px;
     margin-top: 16px;
     .validity-text {
-      font-family: Baloo 2;
       font-size: 16px;
       font-weight: 500;
       line-height: 24px;

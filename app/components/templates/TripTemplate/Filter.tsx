@@ -3,12 +3,13 @@ import React from "react";
 import { useSelector } from "react-redux";
 import styled from "styled-components";
 import { FilterComponent, FilterType } from "./trips.spec";
-// import greenCross from '../../../Icons/svg/green-cross.svg';
+import { RootState } from "@/app/store/configureStore";
+import greenCross from "@/app/components/assets/svgs/green-cross.svg";
+import Image from "next/image";
 
 const Filters = ({ handleFilterSelect }: FilterComponent) => {
-  const { tripFilters } = useSelector((state: any) => state.marketPlace);
-  const { isFetching, filters }: FilterType = tripFilters;
-
+  const { tripFilters } = useSelector((state: RootState) => state.tripsReducer);
+  const { isFetching, filters } = tripFilters;
   return (
     <FlexWrapper>
       {isFetching ? (
@@ -18,7 +19,7 @@ const Filters = ({ handleFilterSelect }: FilterComponent) => {
           <div className="filter-card"></div>
         </Skeleton>
       ) : (
-        filters.map((tab) => (
+        filters.stateFilters.map((tab) => (
           <FilterButton
             key={tab.key}
             onClick={() => handleFilterSelect(tab.key)}
@@ -27,7 +28,7 @@ const Filters = ({ handleFilterSelect }: FilterComponent) => {
             {tab.value}
             {tab.selected && (
               <div className="cross__container">
-                {/* <img src={greenCross} alt="" /> */}
+                <Image src={greenCross} alt="" width={16} height={16} />
               </div>
             )}
           </FilterButton>
