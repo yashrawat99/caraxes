@@ -1,0 +1,77 @@
+.uploader {
+  border-radius: 6px;
+  border: 1px dashed #66a3ff;
+  background: #f7faff;
+  height: 140px;
+
+  /* FLEX */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  margin-top: 16px;
+}
+.content {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  font-weight: 400;
+  font-size: 18px;
+}
+.fileInput {
+  position: absolute;
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: 100%;
+  outline: none;
+  opacity: 0;
+  cursor: pointer;
+}
+.prevImage {
+  border-radius: 6px;
+}
+.prevImageWrapper {
+  width: 70px;
+  position: relative;
+}
+.closeImage {
+  position: absolute;
+  top: -9px;
+  right: -6px;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  padding: 2px;
+  background: #fff;
+  box-shadow: 0 2px 2px rgba(0, 0, 0, 0.2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.imageContainer {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 16px;
+}
+
+.upload {
+  width: 70px;
+  height: 120px;
+  border-radius: 6px;
+  border: 1px dashed #0066ff;
+  background: #f7faff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+.addImage {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #0066ff;
+  font-weight: 500;
+  font-size: 24px;
+}

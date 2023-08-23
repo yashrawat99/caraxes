@@ -23,6 +23,7 @@ import { FeedbackAesthetics, getIcon } from "./util";
 //   EVENT_NAMES,
 // } from "./analytics.trips";
 import PropertyControlledComponent from "@/app/HOC/PropertyControlledComponent";
+import PODUploaderTemplate from "../PODUploaderTemplate";
 
 const Card = ({
   heading,
@@ -166,7 +167,7 @@ const Card = ({
                     {btn.desc}
                     {btn.type === TrackingButtonDesc.TRIP_DETAIL &&
                       // <img src={NextArrowGreen} alt="" />
-                      "sfs"}
+                      ""}
                   </button>
                 </div>
               ))}
@@ -179,12 +180,12 @@ const Card = ({
   const MemoizedPODWidget = useMemo(() => {
     return (
       <PropertyControlledComponent controllerProperty={!isEmpty(podWidget)}>
-        {/* {podWidget?.type === PodWidgetType.UPLOAD && (
-          // <PODUploader tripId={tripId} status={'NOT_UPLOADED'} podValidity={''} />
+        {podWidget?.type === PodWidgetType.UPLOAD && (
+          <PODUploaderTemplate id={tripId} />
         )}
         {podWidget?.type === PodWidgetType.VALIDITY && (
-          <PODUploader tripId={tripId} status={'REJECTED'} podValidity={podWidget.desc?.text} />
-        )} */}
+          <PODUploaderTemplate id={tripId} />
+        )}
       </PropertyControlledComponent>
     );
   }, [podWidget, tripId]);

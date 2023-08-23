@@ -32,3 +32,10 @@ axiosInstance.interceptors.request.use(
     return Promise.reject(error);
   }
 );
+
+export const S3Instance = axios.create({
+  baseURL: baseURL,
+  headers: {
+    token: "7081740f-bd48-49e7-bf46-e77f8b64732e",
+  },
+});
