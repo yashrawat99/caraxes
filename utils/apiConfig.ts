@@ -1,14 +1,8 @@
 import axios from "axios";
-// import {
-//   getAppPlatForm,
-//   getAppVersion,
-//   getSessionId,
-//   getToken,
-//   getUtmSource,
-// } from "./util";
 
 const baseURL = process.env.NEXT_PUBLIC_BASE_URL;
-axios.defaults.withCredentials = true;
+axios.defaults.withCredentials = false;
+
 export const axiosInstance = axios.create({
   baseURL: baseURL,
   headers: {

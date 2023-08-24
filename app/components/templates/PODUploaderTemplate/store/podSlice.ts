@@ -3,7 +3,6 @@ import { PodDTO, podUpload, podUploader, SubmitPOD } from "./contract";
 
 const initialState: podUploader = {
   podDto: {},
-  images: [],
   canSubmit: false,
   imagesDto: {},
   submitted: false,
@@ -22,6 +21,7 @@ const podUploaderSlice = createSlice({
           ? [...state.imagesDto[+tripID], image]
           : [image],
       };
+      state.canSubmit = false;
     },
     asyncUploadPodSuccess: (state, action: PayloadAction<PodDTO>) => {},
     asyncUploadPodFailure: (state, action) => {
@@ -39,7 +39,9 @@ const podUploaderSlice = createSlice({
         [id]: newImages,
       };
     },
-    asyncUploadImgAWS: (state, action: PayloadAction<PodDTO>) => {},
+    asyncUploadImgAWS: (state, action: PayloadAction<PodDTO>) => {
+      state.canSubmit = false;
+    },
     asyncUploadImgAWSSuccess: (state, action: PayloadAction<PodDTO>) => {
       const { tripID } = action.payload;
       state.podDto = {
@@ -53,11 +55,15 @@ const podUploaderSlice = createSlice({
     asyncUploadImgAWSFailure: (state, action: PayloadAction<string>) => {},
     asyncSubmitPod: (state, action: PayloadAction<SubmitPOD>) => {
       state.submitted = false;
+      state.canSubmit = false;
     },
-    asyncSubmitPodSuccess: (state, action: PayloadAction<string>) => {
+    asyncSubmitPodSuccess: (state) => {
       state.submitted = true;
     },
-    asyncSubmitPodFailure: (state) => {},
+    asyncSubmitPodFailure: (state) => {
+      state.submitted = false;
+      state.canSubmit = true;
+    },
   },
 });
 

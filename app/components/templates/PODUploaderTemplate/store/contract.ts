@@ -5,15 +5,7 @@ export interface podUpload {
   image: string;
 }
 export interface podUploader {
-  podDto: Record<
-    number,
-    {
-      docType: string;
-      imgResourceKey: string;
-      imgUrl: string;
-    }[]
-  >;
-  images: string[];
+  podDto: any; //TODO: FIX THIS @YASH
   canSubmit: boolean;
   imagesDto: Record<number, string[]>;
   submitted: boolean;

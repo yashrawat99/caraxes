@@ -1,5 +1,5 @@
 import Image from "next/image";
-import React, { useEffect, useMemo } from "react";
+import React, { useCallback, useEffect, useMemo } from "react";
 import styles from "./style.module.css";
 import camera from "@/app/components/assets/svgs/pod/camera.svg";
 import CustomButton from "../../atoms/CustomButton";
@@ -13,25 +13,23 @@ const PODUploader = ({ id }: PODUploaderTemplate) => {
   const { imagesDto, podDto, canSubmit, submitted } = useSelector(
     (state: RootState) => state.podReducer
   );
-  const images = imagesDto[+id];
+  const images = imagesDto[id];
 
-  useEffect(() => {
-    if (submitted) {
-      window.location.reload();
-    }
-  }, [submitted]);
-  const handleSelect = (event: React.ChangeEvent<HTMLInputElement>) => {
-    if (event.target.files === null) return;
-    const obj = URL.createObjectURL(event.target.files[0]).toString();
-    dispatch(
-      asyncUploadPod({
-        docType: "POD",
-        fileName: event.target.files[0].name,
-        tripID: id,
-        image: obj,
-      })
-    );
-  };
+  const handleSelect = useCallback(
+    (event: React.ChangeEvent<HTMLInputElement>) => {
+      if (event.target.files === null) return;
+      const obj = URL.createObjectURL(event.target.files[0]).toString();
+      dispatch(
+        asyncUploadPod({
+          docType: "POD",
+          fileName: event.target.files[0].name,
+          tripID: id,
+          image: obj,
+        })
+      );
+    },
+    [dispatch, id]
+  );
   const MemoizedUploader = useMemo(() => {
     if (Array.isArray(images) && images.length > 0) return null;
     return (
@@ -49,7 +47,7 @@ const PODUploader = ({ id }: PODUploaderTemplate) => {
         </div>
       </div>
     );
-  }, [images, handleSelect]);
+  }, [handleSelect, images]);
 
   const MemoizedImageContainer = useMemo(() => {
     if (!(Array.isArray(images) && images.length > 0)) return null;
@@ -91,12 +89,22 @@ const PODUploader = ({ id }: PODUploaderTemplate) => {
         )}
       </div>
     );
-  }, [images, dispatch]);
+  }, [images, handleSelect, dispatch, id]);
 
-  const MemoizedPODUploadHandler = useMemo(() => {
-    const onSubmitPod = () => {
-      //TODO: submit api
+  const onSubmitPod = useCallback(() => {
+    const pod = podDto[id];
+    if (pod === "undefined") {
+      // TODO: show error snackbar
+      // sentry through
+      return;
+    }
+    const formData = {
+      tripId: id,
+      podResourceKeys: pod.map((doc: any) => doc.imgResourceKey),
     };
+    dispatch(asyncSubmitPod(formData));
+  }, [id, podDto]);
+  const MemoizedPODUploadHandler = () => {
     if (!(Array.isArray(images) && images.length > 0)) return null;
     return (
       <CustomButton
@@ -106,12 +114,12 @@ const PODUploader = ({ id }: PODUploaderTemplate) => {
         disabled={!canSubmit}
       />
     );
-  }, [images, canSubmit]);
+  };
   return (
     <>
       {MemoizedUploader}
       {MemoizedImageContainer}
-      {MemoizedPODUploadHandler}
+      <MemoizedPODUploadHandler />
     </>
   );
 };

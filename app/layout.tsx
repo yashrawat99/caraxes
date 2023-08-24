@@ -1,4 +1,5 @@
 import "./globals.css";
+import React from "react";
 import { Baloo_2 } from "next/font/google";
 import StyledComponentsRegistry from "./registry";
 import Providers from "./components/templates/TripTemplate/Provider";

@@ -46,13 +46,9 @@ function* uploadAwsWatcher({ payload }: PayloadAction<PodDTO>) {
 
 function* submitPod({ payload }: PayloadAction<SubmitPOD>) {
   const requestUrl = urlConfig.submitPod();
-  const {} = payload;
   try {
-    const response: AxiosResponse = yield axiosInstance.post(
-      requestUrl,
-      payload
-    );
-    yield put(asyncSubmitPodSuccess(""));
+    yield axiosInstance.post(requestUrl, payload);
+    yield put(asyncSubmitPodSuccess());
   } catch (error) {
     yield put(asyncSubmitPodFailure());
   }
