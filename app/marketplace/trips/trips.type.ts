@@ -64,7 +64,7 @@ interface Transaction {
   value: string;
 }
 
-interface FeedbackWidget {
+export interface FeedbackWidget {
   desc: string;
   feedbackType: "GOOD" | "BAD" | "NORMAL";
   score: string;

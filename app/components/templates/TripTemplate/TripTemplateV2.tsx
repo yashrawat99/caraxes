@@ -1,10 +1,10 @@
 import React, { useMemo } from "react";
 import { useSelector, useDispatch, TypedUseSelectorHook } from "react-redux";
 import { TripTemplateDTO } from "./trips.spec";
-import Card from "./Card";
 import { AppDispatch, RootState } from "@/app/store/configureStore";
 import SkeletonCard from "./SkeletonCard";
 import Filters from "./Filter";
+import Card from "./Card";
 
 export const useAppDispatch: () => AppDispatch = useDispatch;
 export const useAppSelector: TypedUseSelectorHook<RootState> = useSelector;
@@ -56,7 +56,13 @@ const TripTemplateV2 = ({
       : isFetching
       ? SkeletonGroup
       : "No Trips Found :(";
-  }, [handleVehicleReplace, isFetching, redirectToDetail, trips]);
+  }, [
+    SkeletonGroup,
+    handleVehicleReplace,
+    isFetching,
+    redirectToDetail,
+    trips,
+  ]);
 
   const MemoizedTripTemplate = useMemo(() => {
     return (

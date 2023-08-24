@@ -1,10 +1,10 @@
 import Image from "next/image";
 import React, { useCallback, useEffect, useMemo } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import styles from "./style.module.css";
 import camera from "@/app/components/assets/svgs/pod/camera.svg";
 import CustomButton from "../../atoms/CustomButton";
 import { asyncSubmitPod, asyncUploadPod, removeImage } from "./store/podSlice";
-import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "@/app/store/configureStore";
 import { PODUploaderTemplate } from "./PODUploader.types";
 
@@ -98,12 +98,14 @@ const PODUploader = ({ id }: PODUploaderTemplate) => {
       // sentry through
       return;
     }
+    // FIXME: doc: any is a hack to get the pod resource keys
     const formData = {
       tripId: id,
       podResourceKeys: pod.map((doc: any) => doc.imgResourceKey),
     };
+
     dispatch(asyncSubmitPod(formData));
-  }, [id, podDto]);
+  }, [dispatch, id, podDto]);
   const MemoizedPODUploadHandler = () => {
     if (!(Array.isArray(images) && images.length > 0)) return null;
     return (

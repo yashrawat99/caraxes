@@ -9,7 +9,7 @@ import {
   fetchTrips,
 } from "@/app/marketplace/trips/store/tripsSlice";
 import { RootState } from "@/app/store/configureStore";
-import { Filter } from "./trips.type";
+import { FeedbackWidget, Filter } from "./trips.type";
 
 const Trips = () => {
   const [page, setPage] = useState(0);
@@ -23,6 +23,7 @@ const Trips = () => {
 
   useEffect(() => {
     dispatch(fetchTripFilters());
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   useEffect(() => {
     dispatch(
@@ -55,6 +56,25 @@ const Trips = () => {
       );
     }
   };
+  const redirect = (tripId: number) =>
+    (window.location.href = `${process.env.NEXT_PUBLIC_BASE_URL}/web-view/marketplace/trips/details/v2/${tripId}`);
+
+  const onRedirectionToDetail = (
+    tripId: number,
+    tripState?: string,
+    feedbackWidget?: FeedbackWidget | null
+  ) => {
+    // FIXME: Add proper events
+    redirect(tripId);
+  };
+  const onVehicleReplaceRedirectionToDetail = (tripId: number) => {
+    // FIXME: Add proper events here too
+    localStorage.setItem("replaceMentOptionTrip", "true");
+    redirect(tripId);
+  };
+  const handleUnselectFilter = (currentkey: Filter, key: string): boolean =>
+    currentkey.selected && currentkey.key === key;
+
   const handleFilterClick = (key: "ACTIVE" | "CANCELLED" | "TRIP_END") => {
     const currentFilter = filters.stateFilters.filter(
       (filter) => filter.key === key
@@ -72,16 +92,14 @@ const Trips = () => {
     dispatch(applyFilter({ filter: isAlreadySelected ? "" : key }));
     setPage(0);
   };
-  const handleUnselectFilter = (currentkey: Filter, key: string): boolean =>
-    currentkey.selected && currentkey.key === key;
 
   return (
     <TripTemplate
       isFetching={isFetching}
       trips={tripsDTO.trips}
       handleScroll={handleScroll}
-      handleVehicleReplace={() => {}}
-      redirectToDetail={() => {}}
+      handleVehicleReplace={onVehicleReplaceRedirectionToDetail}
+      redirectToDetail={onRedirectionToDetail}
       handleFilterSelect={handleFilterClick}
     />
   );

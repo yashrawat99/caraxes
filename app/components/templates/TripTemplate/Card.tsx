@@ -1,7 +1,6 @@
 import React, { useCallback, useMemo } from "react";
 import { isEmpty } from "lodash";
 import { CardType, PodWidgetType, TrackingButtonDesc } from "./trips.spec";
-// import PODUploader from '../TripDetailsTemplate/PODUploader';
 // import TripsOtpTemplate from '../TripsTemplate/TripsOtpTemplate';
 // import NextArrowGreen from "../../../../components/Icons/svg/next-arrow-green-16.svg";
 // import arrow from "../../../../components/Icons/svg/rightArrowNew.svg";
@@ -24,6 +23,7 @@ import { FeedbackAesthetics, getIcon } from "./util";
 // } from "./analytics.trips";
 import PropertyControlledComponent from "@/app/HOC/PropertyControlledComponent";
 import PODUploaderTemplate from "../PODUploaderTemplate";
+import CustomButton from "../../atoms/CustomButton";
 
 const Card = ({
   heading,
@@ -75,14 +75,7 @@ const Card = ({
           return;
       }
     },
-    [
-      redirectToDetail,
-      tripId,
-      tripState,
-      feedbackWidget,
-      handleVehicleReplace,
-      heading,
-    ]
+    [redirectToDetail, tripId, tripState, feedbackWidget, handleVehicleReplace]
   );
   const MemoizedStickyWidget = useMemo(() => {
     if (!stickyWidget?.desc) return null;
@@ -107,7 +100,7 @@ const Card = ({
         {tripState !== "CANCELLED" && <div className="divider"></div>}
       </>
     );
-  }, [heading, subHeading, handleButtonAction]);
+  }, [heading, subHeading, tripState, handleButtonAction]);
   const MemoizedPaymentWidget = useMemo(() => {
     if (!paymentWidget?.items) return null;
     return (
@@ -160,15 +153,11 @@ const Card = ({
             <ButtonContainer>
               {trackingInfoWidget?.buttonDesc?.map((btn) => (
                 <div className="footer" key={btn.type}>
-                  <button
-                    className="trip__button-outlined trip__button"
+                  <CustomButton
+                    label={btn.desc}
                     onClick={() => handleButtonAction(btn.type)}
-                  >
-                    {btn.desc}
-                    {btn.type === TrackingButtonDesc.TRIP_DETAIL &&
-                      // <img src={NextArrowGreen} alt="" />
-                      ""}
-                  </button>
+                    variant="outlined"
+                  />
                 </div>
               ))}
             </ButtonContainer>
@@ -181,10 +170,10 @@ const Card = ({
     return (
       <PropertyControlledComponent controllerProperty={!isEmpty(podWidget)}>
         {podWidget?.type === PodWidgetType.UPLOAD && (
-          <PODUploaderTemplate id={tripId} />
+          <PODUploaderTemplate id={tripId} validity={PodWidgetType.UPLOAD} />
         )}
         {podWidget?.type === PodWidgetType.VALIDITY && (
-          <PODUploaderTemplate id={tripId} />
+          <PODUploaderTemplate id={tripId} validity={PodWidgetType.VALIDITY} />
         )}
       </PropertyControlledComponent>
     );
@@ -240,13 +229,11 @@ const Card = ({
     return (
       <PropertyControlledComponent controllerProperty={!isEmpty(buttonDesc)}>
         <div className="footer">
-          <button
-            className="trip__button-outlined trip__button"
+          <CustomButton
+            label={buttonDesc!}
+            variant="outlined"
             onClick={() => handleButtonAction(TrackingButtonDesc.TRIP_DETAIL)}
-          >
-            {buttonDesc}
-            {/* <img src={NextArrowGreen} alt="" /> */}
-          </button>
+          />
         </div>
       </PropertyControlledComponent>
     );
