@@ -39,7 +39,7 @@ const CustomButton = ({
           </button>
         );
     }
-  }, [disabled]);
+  }, [className, disabled, label, onClick, variant]);
   return MemoizedCustomButton;
 };
 
