@@ -186,9 +186,7 @@ export const Container = styled.div`
     height: 0px !important;
     margin-top: 6px;
   }
-  .uploader-section {
-    background-color: #ffffff;
-  }
+
   .file-upload-image {
     max-height: 200px;
     max-width: 200px;
@@ -302,9 +300,6 @@ export const Container = styled.div`
       letter-spacing: 0;
       text-align: left;
     }
-  }
-  .uploader-section button {
-    margin-top: 16px;
   }
 
   .footer {
